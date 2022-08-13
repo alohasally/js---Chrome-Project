@@ -1,3 +1,45 @@
+
 .hidden {
     display: none;
+}
+
+body{
+    position: relative;
+}
+
+
+/* Id & greeting */
+
+#login-form{
+    position: absolute;
+    top: calc(100% / 2 - 200px);
+    left: calc(100% / 2 - 100px);
+    color: #fff;
+    font-size: 100px;
+}
+
+#greeting{
+    position: absolute;
+}
+/* clock */
+
+#clock{
+    position: absolute;
+    top: calc(100% / 2 - 150px);
+    left: calc(100% / 2 - 150px);
+    color: #fff;
+    font-size: 100px;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+}
+
+
+/* bgimg */
+
+img {
+   
+    width: 100%;
+    height: 100%;
 }
