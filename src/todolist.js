@@ -1,25 +1,28 @@
-const toDoForm = document.querySelector("todo-form");
+const toDoForm = document.getElementById("todo-form");
 const toDoInput = document.querySelector("#todo-form input")
-const toDoList = document.querySelector("todo-input");
+const toDoList = document.getElementById("todo-list");
 const TODOS_KEY ="todos"
-const toDos = [];
+
+let toDos = [];
 
 function saveToDos(){
-    localStorage.setItem("todos", JSON.stringify(toDos));
+    localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
 }
 
 function deleteBtn(event){
-    event.preventDefault();
-    const liBtn = event.target.parentElement
+    const liBtn = event.target.parentElement;
     liBtn.remove();
+    toDos = toDos.filter((toDo) => toDo.id !== parseInt(liBtn.id));
+    saveToDos();
 }
 
 function paintToDo(newTodo){
     const li = document.createElement("li");
+    li.id = newTodo.id;
     const span = document.createElement("span");
-    span.innerText=newTodo;
+    span.innerText=newTodo.text;
     const button = document.createElement("button");
-    button.innerText = "❌"
+    button.innerText = " 🞬"
     button.addEventListener("click", deleteBtn)
     li.appendChild(span);
     li.appendChild(button);
@@ -30,16 +33,28 @@ function paintToDo(newTodo){
 function handleToSubmit(event){
     event.preventDefault();
     const newTodo = toDoInput.value;
-    toDoInput.value="";
-    toDos.push(newTodo)
-    paintToDo(newTodo);
+    toDoInput.value = "";
+    const newTodoObj = {
+        text: newTodo,
+        id: Date.now()
+    }
+    toDos.push(newTodoObj)
+    paintToDo(newTodoObj);
+    saveToDos();
 }
 
-toDoForm.addEventListener("submit", )
+toDoForm.addEventListener("submit", handleToSubmit);
 
-const saveToDos = localStorage.getItem(TODOS_KEY);
+const savedToDos = localStorage.getItem(TODOS_KEY);
 
-if(saveToDos !== null){
-    const parsedToDos = JSON.parse(saveToDos);
-    parsedToDos.forEach(item) => console.log();
+if(savedToDos !== null){
+    const parsedToDos = JSON.parse(savedToDos);
+    toDos = parsedToDos;
+    parsedToDos.forEach(paintToDo);
 } 
+
+
+
+// function sayHello(item){
+//     console.log("this it the turn of", item)
+// }
